@@ -10,6 +10,7 @@
     <ProjectReference Include="..\CommonLibraries\Vector\Vector.csproj" />
     <ProjectReference Include="..\Lab1\LabOneImplementation\LabOneImplementation.csproj" />
     <ProjectReference Include="..\Lab2\LabTwoImplementation\LabTwoImplementation.csproj" />
+    <ProjectReference Include="..\Lab3\LabThreeImplementation\LabThreeImplementation.csproj" />
   </ItemGroup>
 
 </Project>
