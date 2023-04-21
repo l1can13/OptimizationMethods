@@ -172,15 +172,18 @@ namespace OptimizationMethods
         public static Matrix Hessian(FunctionND f, Vector x, double eps = 1e-6)
         {
             Matrix res = new Matrix(x.Count, x.Count);
+            
             int row, col;
-            for (row = 0; row < res.NRows; row++)
+            
+            for (row = 0; row < res.NRows; ++row)
             {
-                for (col = 0; col <= row; col++)
+                for (col = 0; col <= row; ++col)
                 {
                     res[row][col] = Vector.Partial2(f, x, row, col, eps);
                     res[col][row] = res[row][col];
                 }
             }
+
             return res;
         }
 
