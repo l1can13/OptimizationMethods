@@ -28,5 +28,81 @@ namespace OptimizationMethods
             
             return (x_i_1 + x_i) * 0.5;
         }
+
+        public static double InternalPenalty(Vector x, Matrix n, Vector d)
+        {
+            double res = 0.0;
+            
+            Vector ro = n * x - d;
+
+            for (int i = 0; i < ro.Count; ++i)
+            {
+                res += 1 / (ro[i] * ro[i]);
+            }
+            
+            return res;
+        }
+
+        public static double ExternalPenalty(Vector x, Matrix n, Vector d)
+        {
+            Vector dist = n * x - d;
+            Vector distPowered = new Vector(dist.Count);
+            
+            for (int i = 0; i < dist.Count; ++i)
+            {
+                distPowered[i] = dist[i] * dist[i];
+            }
+            
+            Vector distHaviside = Haviside(dist, 1);
+            double res = distHaviside.Dot(distPowered);
+            
+            return res;
+        }
+
+        private static Vector Haviside(Vector vector, int value)
+        {
+            Vector res = new Vector(vector.Count);
+            for (int i = 0; i < vector.Count; ++i)
+            {
+                int resultItem = 0;
+                if (Math.Abs(vector[i] - 0) < 1e-16)
+                {
+                    resultItem = value;
+                }
+                else if (vector[i] > 0)
+                {
+                    resultItem = 1;
+                }
+                res[i] = resultItem;
+            }
+            return res;
+        }
+
+        private static int haviside(double number, int value)
+        {
+            int resultItem = 0;
+            if (Math.Abs(number - 0) < 1e-16)
+            {
+                resultItem = value;
+            }
+            else if (number > 0)
+            {
+                resultItem = 1;
+            }
+            return resultItem;
+        }
+
+        public static double circularInternalPenalty(double r, double x0, double y0, double x, double y)
+        {
+            return Math.Pow((r * r - Math.Pow(x - x0, 2) - Math.Pow(y - y0, 2)), -2);
+        }
+
+        public static double circularExternalPenalty(double r, double x0, double y0, double x, double y)
+        {
+            double dist = Math.Pow(x - x0, 2) + Math.Pow(y - y0, 2) - r * r;
+            int distHaviside = Math.Abs(dist - 0.0) < 1e-16 ? 1 : 0;
+            
+            return distHaviside * dist;
+        }
     }
 }

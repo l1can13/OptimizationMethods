@@ -31,7 +31,7 @@ namespace OptimizationMethods
             return 1 / (6 + args[0] * 3 - args[1]);
         }
 
-        // Ишем минимум функции  Testf2 при условии Psi1 и Psi2(Это внутренний штраф)
+        // Ишем минимум функции Testf2 при условии Psi1 и Psi2 (Это внутренний штраф)
         static double Func(Vector args)
         {
             return Testf2(args) + Psi2(args) + Psi1(args);
