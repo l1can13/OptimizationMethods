@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Numerics;
 
 namespace OptimizationMethods
 {
@@ -17,24 +16,20 @@ namespace OptimizationMethods
 
         static double Testf2(Vector args)
         {
-            return (args[0] - 2) * (args[0] - 2) + (args[1] - 2) * (args[1] - 2);
+            return (args[0] - 4) * (args[0] - 4) + (args[1] - 4) * (args[1] - 4);
         }
 
-        static double Psi1(Vector args)
-        {
-            return 1 / (5 - args[0] * 2 + args[1] * 3);
-        }
-        
-        /// Уловие 1
-        static double Psi2(Vector args)
-        {
-            return 1 / (6 + args[0] * 3 - args[1]);
-        }
-
-        // Ишем минимум функции  Testf2 при условии Psi1 и Psi2(Это внутренний штраф)
         static double Func(Vector args)
         {
-            return Testf2(args) + Psi2(args) + Psi1(args);
+            Vector b = new double[] { -10, 5, 8, 32 };
+            Vector row1 = new double[] { 3, 1 };
+            Vector row2 = new double[] { -3, 4 };
+            Vector row3 = new double[] { 4, -4 };
+            Vector row4 = new double[] { -4, -1 };
+
+            Matrix n = new Matrix(row1, row2, row3, row4);
+
+            return Testf2(args) + LabFourImplementation.ExternalPenalty(args, n, b);
         }
 
         public static void DemoLabOne()
@@ -85,13 +80,10 @@ namespace OptimizationMethods
             Console.WriteLine("/// Lab. work #4 ///\n");
             Console.WriteLine("////////////////////\n\n");
 
-            Vector x_1 = new double[] { 0, 0 };
-            Vector x_0 = new double[] { 5, 5 };
-            Console.WriteLine($"x_0 = {x_0}, x_1 = {x_1}\n");
-            Console.WriteLine($"NewtoneRaphson         : {LabFourImplementation.NewtoneRaphson(Testf2, x_1)}");
-            Console.WriteLine($"NewtoneRaphson         : {LabFourImplementation.NewtoneRaphson(Func, x_1)}\n");
-            Console.WriteLine($"STRELKOV NewtoneRaphson: {NewtoneRaphson(Testf2, x_1)}");
-            Console.WriteLine($"STRELKOV NewtoneRaphson: {NewtoneRaphson(Func, x_1)}\n");
+            Vector x_start = new double[] { -3, -4 };
+            Console.WriteLine($"x_start = {x_start}\n");
+            Console.WriteLine($"NewtoneRaphson         : {LabFourImplementation.NewtoneRaphson(Testf2, x_start)}");
+            Console.WriteLine($"NewtoneRaphson penalty : {LabFourImplementation.NewtoneRaphson(Func, x_start)}\n");
         }
 
         public static Vector NewtoneRaphson(FunctionND f, Vector x_start, double eps = 1e-6, int max_iters = 1000)

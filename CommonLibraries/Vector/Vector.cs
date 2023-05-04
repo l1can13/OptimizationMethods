@@ -289,5 +289,10 @@ namespace OptimizationMethods
         /// <param name="b"></param>
         /// <returns>(a;b)</returns>
         public static double Dot(Vector a, Vector b) => a.Dot(b);
+
+        public double Sum(Func<object, object> value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
