@@ -5,7 +5,7 @@ namespace OptimizationMethods
     /// <summary>
     /// Реализация лабораторной работы №1.
     /// </summary>
-    public class LabOneImplementation
+    public static class LabOneImplementation
     {
         /// <summary>
         /// Делегат-функция f(x).
