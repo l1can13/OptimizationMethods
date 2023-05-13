@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\CommonLibraries\Matrix\Matrix.csproj" />
+    <ProjectReference Include="..\..\CommonLibraries\NumericUtils\NumericUtils.csproj" />
+    <ProjectReference Include="..\..\CommonLibraries\Vector\Vector.csproj" />
+  </ItemGroup>
+
+</Project>

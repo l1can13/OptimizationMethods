@@ -21,15 +21,15 @@ namespace OptimizationMethods
 
         static double Func(Vector args)
         {
-            Vector b = new double[] { -10, 5, 8, 32 };
-            Vector row1 = new double[] { 3, 1 };
-            Vector row2 = new double[] { -3, 4 };
-            Vector row3 = new double[] { 4, -4 };
-            Vector row4 = new double[] { -4, -1 };
+            Vector row1 = new Vector(3, 1);
+            Vector row2 = new Vector(-3, 4);
+            Vector row3 = new Vector(4, -4);
+            Vector row4 = new Vector(-4, -1);
 
             Matrix n = new Matrix(row1, row2, row3, row4);
+			Vector b = new Vector(-10, 5, 8, 32);
 
-            return Testf2(args) + LabFourImplementation.ExternalPenalty(args, n, b);
+			return Testf2(args) + LabFourImplementation.ExternalPenalty(args, n, b);
         }
 
         public static void DemoLabOne()
@@ -53,8 +53,8 @@ namespace OptimizationMethods
             Console.WriteLine("/// Lab. work #2 ///\n");
             Console.WriteLine("////////////////////\n\n");
 
-            Vector x_0 = new double[] { 5, 5 };
-            Vector x_1 = new double[] { 0, 0 };
+            Vector x_0 = new Vector(5, 5);
+            Vector x_1 = new Vector(0, 0);
             
             Console.WriteLine($"x_0 = {x_0}, x_1 = {x_1}\n");
             Console.WriteLine($"BiSect           : {LabTwoImplementation.BiSect(Testf2, x_1, x_0)}");
@@ -67,8 +67,8 @@ namespace OptimizationMethods
             Console.WriteLine("/// Lab. work #3 ///\n");
             Console.WriteLine("////////////////////\n\n");
 
-            Vector x_1 = new double[] { 0, 0 };
-            Vector x_0 = new double[] { 5, 5 };
+            Vector x_1 = new Vector(0, 0);
+            Vector x_0 = new Vector(5, 5);
             Console.WriteLine($"x_0 = {x_0}, x_1 = {x_1}\n");
             Console.WriteLine($"GradientDescend        : {LabThreeImplementation.GradientDescend(Testf2, x_1)}");
             Console.WriteLine($"СonjGradientDescend    : {LabThreeImplementation.СonjGradientDescend(Testf2, x_1)}");
@@ -80,10 +80,10 @@ namespace OptimizationMethods
             Console.WriteLine("/// Lab. work #4 ///\n");
             Console.WriteLine("////////////////////\n\n");
 
-            Vector x_start = new double[] { -3, -4 };
+            Vector x_start = new Vector(-3, -4);
             Console.WriteLine($"x_start = {x_start}\n");
-            Console.WriteLine($"NewtoneRaphson         : {LabFourImplementation.NewtoneRaphson(Testf2, x_start)}");
-            Console.WriteLine($"NewtoneRaphson penalty : {LabFourImplementation.NewtoneRaphson(Func, x_start)}\n");
+            Console.WriteLine($"NewtoneRaphson         : {LabFourImplementation.NewtonRaphson(Testf2, x_start)}");
+            Console.WriteLine($"NewtoneRaphson penalty : {LabFourImplementation.NewtonRaphson(Func, x_start)}\n");
         }
 
         public static Vector NewtoneRaphson(FunctionND f, Vector x_start, double eps = 1e-6, int max_iters = 1000)
