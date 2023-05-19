@@ -1,4 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Numerics;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace OptimizationMethods
 {
@@ -6,7 +12,7 @@ namespace OptimizationMethods
     {
         public static void Main(string[] args)
         {
-            DemoLabFour();
+            DemoLabFive();
         }
 
         public static double Testf1(double arg)
@@ -27,9 +33,9 @@ namespace OptimizationMethods
             Vector row4 = new Vector(-4, -1);
 
             Matrix n = new Matrix(row1, row2, row3, row4);
-			Vector b = new Vector(-10, 5, 8, 32);
+            Vector b = new Vector(-10, 5, 8, 32);
 
-			return Testf2(args) + LabFourImplementation.ExternalPenalty(args, n, b);
+            return Testf2(args) + LabFourImplementation.ExternalPenalty(args, n, b);
         }
 
         public static void DemoLabOne()
@@ -55,7 +61,7 @@ namespace OptimizationMethods
 
             Vector x_0 = new Vector(5, 5);
             Vector x_1 = new Vector(0, 0);
-            
+
             Console.WriteLine($"x_0 = {x_0}, x_1 = {x_1}\n");
             Console.WriteLine($"BiSect           : {LabTwoImplementation.BiSect(Testf2, x_1, x_0)}");
             Console.WriteLine($"PerCoordDescend  : {LabTwoImplementation.PerCoordDescend(Testf2, x_1)}");
@@ -86,29 +92,11 @@ namespace OptimizationMethods
             Console.WriteLine($"NewtoneRaphson penalty : {LabFourImplementation.NewtonRaphson(Func, x_start)}\n");
         }
 
-        public static Vector NewtoneRaphson(FunctionND f, Vector x_start, double eps = 1e-6, int max_iters = 1000)
+        public static void DemoLabFive()
         {
-            Vector x_i = new Vector(x_start);
+            List<Simplex> simplexes = SimplexReader.ReadSimplexes("sm_task.json");
 
-            Vector x_i_1 = new Vector(x_start);
-
-            int cntr = 0;
-
-            for (; cntr <= max_iters; ++cntr)
-            {
-                x_i_1 = x_i - Matrix.Invert(Matrix.Hessian(f, x_i, eps)) * Vector.Gradient(f, x_i, eps);
-
-                if ((x_i_1 - x_i).Magnitude < eps)
-                {
-                    break;
-                }
-
-                x_i = x_i_1;
-            }
-
-            Console.WriteLine($"Newtone - Raphson iterations number : {cntr}");
-
-            return (x_i_1 + x_i) * 0.5;
+            simplexes[0].Solve();
         }
     }
 }
